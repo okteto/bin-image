@@ -30,6 +30,9 @@ workflows:
   release:
     jobs:
       - release:
+          context:
+            - Okteto-Staging
+            - dockerhub
           filters:
             branches:
               ignore: /.*/
