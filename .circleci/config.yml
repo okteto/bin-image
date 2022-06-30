@@ -24,7 +24,11 @@ jobs:
           command: |
             export BIN_TAG=${CIRCLE_TAG}
             echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            make push
+            docker buildx build \
+              --platform linux/amd64,linux/arm64,linux/arm/v7 \
+              --output "type=image,push=true" \
+              --build-arg OKTETO_BIN_TAG=${BIN_TAG} \
+              -t okteto/bin:${BIN_TAG}  .
 workflows:
   version: 2
   release:
