@@ -10,7 +10,7 @@ aliases:
 jobs:
   release:
     docker:
-      - image: okteto/golang-ci:1.16
+      - image: okteto/golang-ci:1.17.11
         auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
