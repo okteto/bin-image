@@ -1,12 +1,15 @@
 name: Docker Image CD
 
 on:
+  push:
+    branches: ["master"]
   workflow_dispatch:
     inputs:
       bin_tag:
         description: "Okteto bin tag"
         required: true
         type: string
+  
 
 jobs:
   build_and_push:
@@ -47,17 +50,10 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          username: "${{ secrets.DOCKER_USERNAME }}"
-          password: "${{ secrets.DOCKER_PASS }}"
-
-      - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: "${{ secrets.DOCKER_USER }}"
+          password: "${{ secrets.DOCKER_PASS }}"
 
       - name: Pushing Image to Github Container Registry
         uses: docker/build-push-action@v2
@@ -67,10 +63,7 @@ jobs:
           build-args: |
             OKTETO_BIN_TAG=${{ github.event.inputs.bin_tag }}
           tags: |
-            okteto/bin:latest
             okteto/bin:${{ github.event.inputs.bin_tag }}
-            ghcr.io/okteto/bin:latest
-            ghcr.io/okteto/bin:${{ github.event.inputs.bin_tag }}
           platforms: linux/amd64,linux/arm64
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
