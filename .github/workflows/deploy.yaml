@@ -1,15 +1,9 @@
 name: Docker Image CD
 
 on:
-  push:
-    branches: ["master"]
-  workflow_dispatch:
-    inputs:
-      bin_tag:
-        description: "Okteto bin tag"
-        required: true
-        type: string
-  
+  release:
+    types:
+      - published  
 
 jobs:
   build_and_push:
@@ -61,9 +55,9 @@ jobs:
           context: .
           push: true
           build-args: |
-            OKTETO_BIN_TAG=${{ github.event.inputs.bin_tag }}
+            OKTETO_BIN_TAG=${{ github.event.release.tag_name }}
           tags: |
-            okteto/bin:${{ github.event.inputs.bin_tag }}
+            okteto/bin:${{ github.event.release.tag_name }}
           platforms: linux/amd64,linux/arm64
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
