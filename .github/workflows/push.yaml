@@ -1,4 +1,4 @@
-name: Docker Image Push
+name: CD
 
 on:
   release:
