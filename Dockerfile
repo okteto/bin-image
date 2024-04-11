@@ -1,7 +1,7 @@
 FROM syncthing/syncthing:1.27.6 AS syncthing
-FROM okteto/remote:0.4.3 AS remote
-FROM okteto/supervisor:0.2.2 AS supervisor
-FROM okteto/clean:0.1.7 AS clean
+FROM okteto/remote:0.5.0 AS remote
+FROM okteto/supervisor:0.3.0 AS supervisor
+FROM okteto/clean:0.2.0 AS clean
 
 FROM busybox
 
