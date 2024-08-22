@@ -63,5 +63,10 @@ while getopts ":s:ervd" opt; do
         esac
 done
 
+syncthingHome=/var/syncthing
+log "Copying configuration files to $syncthingHome"
+cp /var/syncthing/secret/* $syncthingHome
+chmod 644 $syncthingHome/cert.pem $syncthingHome/config.xml $syncthingHome/key.pem
+
 log "Executing okteto-supervisor $remote $reset $verbose"
 exec /var/okteto/bin/okteto-supervisor $remote $reset $verbose
