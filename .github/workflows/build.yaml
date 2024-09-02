@@ -52,12 +52,6 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.24.0
-        with:
-          image-ref: 'okteto/bin:1.6.0'
-          format: 'table'
-
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
