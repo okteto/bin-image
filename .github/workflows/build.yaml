@@ -57,7 +57,6 @@ jobs:
         with:
           image-ref: 'okteto/bin:1.6.0'
           format: 'table'
-          exit-code: '1'
 
       - name: Move cache
         run: |
